@@ -31,6 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
   mongo_dart: ^0.10.3
+  http: ^1.2.2
+  firebase_core: ^2.1.1
+  firebase_auth: ^4.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -41,6 +44,7 @@ dependencies:
   google_nav_bar: ^5.0.6
   carousel_slider: ^4.2.1
   five_pointed_star: ^1.0.3
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +79,8 @@ flutter:
     - images/dog5.jpg
     - images/PawCares.png
     - images/PawCaresBg.png
+    - images/petdetailsbg.jpg
+    - images/adoptpetbg.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

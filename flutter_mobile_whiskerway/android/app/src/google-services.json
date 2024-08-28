@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "596438894943",
+    "project_id": "wiskerway-4773e",
+    "storage_bucket": "wiskerway-4773e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596438894943:android:5f02faa9804c9365690eea",
+        "android_client_info": {
+          "package_name": "com.example.flutter_mobile_whiskerway"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMmh_3UQQw2St5is6QFEr29mLaoXmwqKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

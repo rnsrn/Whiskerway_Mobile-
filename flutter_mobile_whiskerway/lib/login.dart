@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobile_whiskerway/signup.dart';
-import 'package:flutter_mobile_whiskerway/verify.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'signup.dart';
+import 'verify.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,6 +22,48 @@ class _LoginPageState extends State<LoginPage> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> loginUser(String email, String password) async {
+    // Replace instances with your production URL (like https://your-heroku-app.herokuapp.com)
+    const String apiUrl =
+        "https://wiskerway-e04ac6fd2a69.herokuapp.com/login"; // Adjust this for your setup // For android Emulator - local server
+    // final String apiUrl = "http://127.0.0.1:5000/login"; // For iOS Simulator - local server
+    // final String apiUrl = "http://<your-ip-address>:5000/login"; // For Physical Device - local server
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          'email': email,
+          'password': password,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Handle successful login
+        print('User logged in successfully');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Login Successfully')),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EmailVerificationPage()),
+        );
+      } else {
+        // Handle login failure
+        print('Login failed: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login failed: ${response.body}')),
+        );
+      }
+    } catch (e) {
+      print('Error during login: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    }
   }
 
   @override
@@ -166,11 +210,10 @@ class _LoginPageState extends State<LoginPage> {
                           height: 75,
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const VerificationPage()));
+                              loginUser(
+                                _emailController.text,
+                                _passwordController.text,
+                              );
                             }
                           },
                           color: const Color(0xff013958),

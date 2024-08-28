@@ -8,8 +8,17 @@ import 'package:flutter_mobile_whiskerway/profilePage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
-class EditProfilePage extends StatelessWidget {
+class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
+
+  @override
+  State<EditProfilePage> createState() => _EditProfilePageState();
+}
+
+class _EditProfilePageState extends State<EditProfilePage> {
+  String? selectedType;
+  String? neuteredStatus;
+  String? openForDatesStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -91,19 +100,43 @@ class EditProfilePage extends StatelessWidget {
             ),
 
             SizedBox(height: 30), // Add spacing between avatar and inputs
-            inputFile(label: "First Name"),
-            inputFile(label: "Last Name"),
-            inputFile(label: "Email"),
-            inputFile(
-              label: "Password",
-              obscureText: true,
-              suffixIcon: Icons.visibility_off,
+            inputFile(label: "Pet Name"),
+            dropdownField(
+              label: "Type",
+              value: selectedType,
+              onChanged: (newValue) {
+                setState(() {
+                  selectedType = newValue;
+                });
+              },
+              items: ['Dog', 'Cat', 'Other'],
             ),
-            inputFile(
-              label: "Re-type Password",
-              obscureText: true,
-              suffixIcon: Icons.visibility_off,
+            inputFile(label: "Breed"),
+            inputFile(label: "Age"),
+            dropdownField(
+              label: "Neutered",
+              value: neuteredStatus,
+              onChanged: (newValue) {
+                setState(() {
+                  neuteredStatus = newValue;
+                });
+              },
+              items: ['Yes', 'No'],
             ),
+            inputFile(label: "Personality"),
+            dropdownField(
+              label: "Open for Dates",
+              value: openForDatesStatus,
+              onChanged: (newValue) {
+                setState(() {
+                  openForDatesStatus = newValue;
+                });
+              },
+              items: ['Yes', 'No'],
+            ),
+            inputFile(label: "Bio"),
+            inputFile(label: "Image"),
+            inputFile(label: "Generate QR"),
             Padding(
               padding: EdgeInsets.only(top: 30),
               child: Container(
@@ -180,19 +213,73 @@ class EditProfilePage extends StatelessWidget {
       ],
     );
   }
+
+  Widget dropdownField({
+    required String label,
+    String? value,
+    required void Function(String?) onChanged,
+    required List<String> items,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(height: 10),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        DropdownButtonFormField<String>(
+          value: value,
+          onChanged: onChanged,
+          items: items.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            filled: true,
+            fillColor: Colors.white,
+            enabledBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              borderSide: BorderSide(
+                color: Colors.white,
+              ),
+            ),
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              borderSide: BorderSide(color: Colors.green),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+      ],
+    );
+  }
 }
 
 /////////////bottom navbar
 
-class HomePageEditProfile extends StatefulWidget {
+class PetPageEditProfile extends StatefulWidget {
   @override
-  State<HomePageEditProfile> createState() => _HomePageEditProfileState();
+  State<PetPageEditProfile> createState() => _PetPageEditProfileState();
 }
 
-class _HomePageEditProfileState extends State<HomePageEditProfile> {
+class _PetPageEditProfileState extends State<PetPageEditProfile> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
-    EditProfilePage(), // Example of actual widget
+    PetPageEditProfile(), // Example of actual widget
     MatingPage(), // Example of actual widget
     PetListScreen(), // Example of actual widget
     ChatScreen(),

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobile_whiskerway/editprofile.dart';
 import 'package:flutter_mobile_whiskerway/home.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
+import 'package:flutter_mobile_whiskerway/mapPin.dart';
 import 'package:flutter_mobile_whiskerway/mating.dart';
+import 'package:flutter_mobile_whiskerway/messageChat.dart';
+import 'package:flutter_mobile_whiskerway/petdetails.dart';
+import 'package:flutter_mobile_whiskerway/plusCircle.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -53,6 +57,15 @@ class ProfilePage extends StatelessWidget {
               PopupMenuButton(
                 itemBuilder: (context) => [
                   PopupMenuItem(
+                    child: Text('Pet Details'),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PetPageProfile()));
+                    },
+                  ),
+                  PopupMenuItem(
                     child: Text(
                       'Log Out',
                       style: TextStyle(
@@ -99,7 +112,8 @@ class ProfilePage extends StatelessWidget {
                       color: Colors.grey,
                     ))),
             SizedBox(height: 30), // Add spacing between avatar and inputs
-            inputFile(label: "Name"),
+            inputFile(label: "First Name"),
+            inputFile(label: "Last Name"),
             inputFile(label: "Email"),
             inputFile(
               label: "Password",
@@ -107,7 +121,7 @@ class ProfilePage extends StatelessWidget {
               suffixIcon: Icons.visibility_off,
             ),
 
-            inputFile(label: "Zip Code"),
+            inputFile(label: "City"),
             Padding(
               padding: EdgeInsets.only(top: 30),
               child: Container(
@@ -179,9 +193,9 @@ class _HomePageProfileState extends State<HomePageProfile> {
   static List<Widget> _widgetOptions = <Widget>[
     ProfilePage(), // Example of actual widget
     MatingPage(), // Example of actual widget
-    Placeholder(), // Example of actual widget
-    Placeholder(),
-    Placeholder(), // Example of actual widget
+    PetListScreen(), // Example of actual widget
+    ChatScreen(),
+    NearMePage(), // Example of actual widget
   ];
 
   @override

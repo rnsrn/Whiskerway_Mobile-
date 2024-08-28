@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_mobile_whiskerway/home.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
+import 'package:flutter_mobile_whiskerway/petdetails.dart';
 import 'package:flutter_mobile_whiskerway/profilePage.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -61,6 +62,15 @@ class _ChatScreenState extends State<ChatScreen> {
                         MaterialPageRoute(
                             builder: (context) => HomePageProfile()),
                       );
+                    },
+                  ),
+                  PopupMenuItem(
+                    child: Text('Pet Details'),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PetPageProfile()));
                     },
                   ),
                   PopupMenuItem(

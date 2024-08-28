@@ -3,6 +3,7 @@ import 'package:flutter_mobile_whiskerway/home.dart';
 import 'package:flutter_mobile_whiskerway/home_screen.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
 import 'package:flutter_mobile_whiskerway/mating.dart';
+import 'package:flutter_mobile_whiskerway/petdetails.dart';
 import 'package:flutter_mobile_whiskerway/profilePage.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -61,6 +62,15 @@ class _PetListScreenState extends State<PetListScreen> {
                   PopupMenuItem(
                     child: Text('Profile'),
                     value: 'Profile',
+                  ),
+                  PopupMenuItem(
+                    child: Text('Pet Details'),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PetPageProfile()));
+                    },
                   ),
                   PopupMenuItem(
                     child: Text(

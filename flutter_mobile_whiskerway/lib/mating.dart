@@ -4,6 +4,8 @@ import 'package:flutter_mobile_whiskerway/home_screen.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
 import 'package:flutter_mobile_whiskerway/mapPin.dart';
 import 'package:flutter_mobile_whiskerway/messageChat.dart';
+import 'package:flutter_mobile_whiskerway/petdetails.dart';
+import 'package:flutter_mobile_whiskerway/petstats.dart';
 import 'package:flutter_mobile_whiskerway/plusCircle.dart';
 import 'package:flutter_mobile_whiskerway/profilePage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -75,6 +77,15 @@ class _MatingPageState extends State<MatingPage> {
                         MaterialPageRoute(
                             builder: (context) => HomePageProfile()),
                       );
+                    },
+                  ),
+                  PopupMenuItem(
+                    child: Text('Pet Details'),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PetPageProfile()));
                     },
                   ),
                   PopupMenuItem(
@@ -174,50 +185,60 @@ class AllTab extends StatelessWidget {
           width: 400,
           color: Color(0xffd9f1fd),
           padding: const EdgeInsets.all(3.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'images/dog1.jpg',
-                    height: 80,
-                    width: 100,
-                    fit: BoxFit.scaleDown,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 3),
-                        child: Text(
-                          'Row Header',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+          child: InkWell(
+            onTap: () {
+              // Handle the tap action here
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Pet_StatisticPage()));
+              // You can also navigate to another page, open a dialog, etc.
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      'images/petdetailsbg.jpg',
+                      height: 80,
+                      width: 100,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Text(
+                            'Row Header',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 3),
-                        child: Text(
-                          'Body copy description',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
+                        Padding(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Text(
+                            'Body copy description',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ],
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ],
