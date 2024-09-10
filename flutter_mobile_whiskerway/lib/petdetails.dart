@@ -7,7 +7,9 @@ import 'package:flutter_mobile_whiskerway/mating.dart';
 import 'package:flutter_mobile_whiskerway/messageChat.dart';
 import 'package:flutter_mobile_whiskerway/plusCircle.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:image_picker/image_picker.dart'; // for image picker
 import 'package:line_icons/line_icons.dart';
+import 'dart:io'; // for File handling
 
 class Petdetails extends StatefulWidget {
   const Petdetails({super.key});
@@ -20,6 +22,19 @@ class _PetdetailsState extends State<Petdetails> {
   String? selectedType;
   String? neuteredStatus;
   String? openForDatesStatus;
+  File? _image; // to hold the selected image
+
+  // Function to pick an image
+  Future<void> _pickImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +100,15 @@ class _PetdetailsState extends State<Petdetails> {
             CircleAvatar(
               backgroundColor: Colors.white,
               radius: 70,
-              child: Icon(
-                Icons.person_2_outlined,
-                size: 90,
-              ),
+              backgroundImage: _image != null
+                  ? FileImage(_image!) // Display selected image
+                  : null,
+              child: _image == null
+                  ? Icon(
+                      Icons.person_2_outlined,
+                      size: 90,
+                    )
+                  : null,
             ),
             TextButton(
                 onPressed: () {
@@ -139,7 +159,7 @@ class _PetdetailsState extends State<Petdetails> {
               items: ['Yes', 'No'],
             ),
             inputFile(label: "Bio"),
-            inputFile(label: "Image"),
+            inputFile(label: "Image"), // Image input field
             inputFile(label: "Generate QR"),
             Padding(
               padding: EdgeInsets.only(top: 30),
@@ -156,48 +176,81 @@ class _PetdetailsState extends State<Petdetails> {
     );
   }
 
+  // Modified inputFile function with special case for "Image" label
   Widget inputFile(
       {required String label, bool obscureText = false, IconData? suffixIcon}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 10),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+    if (label == "Image") {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 10),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        TextField(
-          obscureText: obscureText,
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            filled: true,
-            fillColor: Colors.white,
-            suffixIcon: obscureText ? Icon(suffixIcon) : null,
-            enabledBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(32.0)),
-              borderSide: BorderSide(
+          const SizedBox(height: 5),
+          GestureDetector(
+            onTap: _pickImage, // Open image picker on tap
+            child: Container(
+              height: 150,
+              decoration: BoxDecoration(
                 color: Colors.white,
+                borderRadius: BorderRadius.circular(32),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Center(
+                child: _image != null
+                    ? Image.file(_image!)
+                    : Icon(Icons.add_photo_alternate,
+                        size: 50, color: Colors.grey),
               ),
             ),
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(32.0)),
-              borderSide: BorderSide(color: Colors.green),
+          ),
+          const SizedBox(height: 10),
+        ],
+      );
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 10),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        )
-      ],
-    );
+          const SizedBox(height: 5),
+          TextField(
+            obscureText: obscureText,
+            decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              filled: true,
+              fillColor: Colors.white,
+              suffixIcon: obscureText ? Icon(suffixIcon) : null,
+              enabledBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                borderSide: BorderSide(
+                  color: Colors.white,
+                ),
+              ),
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                borderSide: BorderSide(color: Colors.green),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+        ],
+      );
+    }
   }
 
   Widget dropdownField({
@@ -218,9 +271,7 @@ class _PetdetailsState extends State<Petdetails> {
             color: Colors.black,
           ),
         ),
-        const SizedBox(
-          height: 5,
-        ),
+        const SizedBox(height: 5),
         DropdownButtonFormField<String>(
           value: value,
           onChanged: onChanged,
@@ -247,9 +298,7 @@ class _PetdetailsState extends State<Petdetails> {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
       ],
     );
   }
