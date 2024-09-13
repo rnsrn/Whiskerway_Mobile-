@@ -1,11 +1,10 @@
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart'; // for kIsWeb
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_whiskerway/viewpets.dart';
 import 'package:image_picker/image_picker.dart'; // for picking images
-import 'dart:math';
 import 'package:flutter_mobile_whiskerway/home.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
-import 'package:flutter_mobile_whiskerway/petdetails.dart';
 import 'package:flutter_mobile_whiskerway/profilePage.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -93,12 +92,12 @@ class _ChatScreenState extends State<ChatScreen> {
                     },
                   ),
                   PopupMenuItem(
-                    child: Text('Pet Details'),
+                    child: Text('View Pets'),
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PetPageProfile()));
+                              builder: (context) => ViewPetPage()));
                     },
                   ),
                   PopupMenuItem(

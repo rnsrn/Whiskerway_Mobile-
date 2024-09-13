@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_whiskerway/home.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
-import 'package:flutter_mobile_whiskerway/petdetails.dart';
 import 'package:flutter_mobile_whiskerway/profilePage.dart';
+import 'package:flutter_mobile_whiskerway/viewpets.dart';
 
 class NearMePage extends StatefulWidget {
   @override
@@ -17,6 +17,9 @@ class _NearMePageState extends State<NearMePage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      setState(() {}); // Rebuild the widget when the tab changes
+    });
   }
 
   @override
@@ -62,7 +65,7 @@ class _NearMePageState extends State<NearMePage>
                     ),
                   ),
                   const Text(
-                    'User Name',
+                    'Locate Nearby Facilities',
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w400,
@@ -85,12 +88,12 @@ class _NearMePageState extends State<NearMePage>
                     },
                   ),
                   PopupMenuItem(
-                    child: Text('Pet Details'),
+                    child: Text('View Pets'),
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PetPageProfile()));
+                              builder: (context) => ViewPetPage()));
                     },
                   ),
                   PopupMenuItem(
@@ -145,21 +148,28 @@ class _NearMePageState extends State<NearMePage>
   }
 
   Widget _buildTab(String text, {double fontSize = 16, required int index}) {
+    bool isSelected = _tabController.index == index;
+
     return SizedBox(
       height: 40,
       child: ElevatedButton(
         onPressed: () {
-          _tabController.animateTo(index);
+          setState(() {
+            _tabController.animateTo(index);
+          });
         },
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 20), // Adjust padding
           minimumSize: Size(80, 40),
-          backgroundColor: const Color(0xFF7ecef8), // Change button color
+          backgroundColor: isSelected
+              ? const Color(0xff013958) // Selected button color
+              : const Color(0xFF7ecef8), // Unselected button color
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: Colors.black, // Change text color
+            color:
+                isSelected ? Colors.white : Colors.black, // Change text color
             fontSize: fontSize, // Change text size
           ),
         ),

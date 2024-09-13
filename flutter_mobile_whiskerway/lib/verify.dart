@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_whiskerway/home.dart';
-import 'package:flutter_mobile_whiskerway/home_screen.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
 
 class EmailVerificationPage extends StatelessWidget {
@@ -128,10 +127,4 @@ class EmailVerificationPage extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: EmailVerificationPage(),
-  ));
 }

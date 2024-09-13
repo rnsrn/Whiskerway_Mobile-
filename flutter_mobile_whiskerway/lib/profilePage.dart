@@ -5,8 +5,8 @@ import 'package:flutter_mobile_whiskerway/login.dart';
 import 'package:flutter_mobile_whiskerway/mapPin.dart';
 import 'package:flutter_mobile_whiskerway/mating.dart';
 import 'package:flutter_mobile_whiskerway/messageChat.dart';
-import 'package:flutter_mobile_whiskerway/petdetails.dart';
 import 'package:flutter_mobile_whiskerway/plusCircle.dart';
+import 'package:flutter_mobile_whiskerway/viewpets.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -57,12 +57,10 @@ class ProfilePage extends StatelessWidget {
               PopupMenuButton(
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    child: Text('Pet Details'),
+                    child: Text('View Pets'),
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PetPageProfile()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Viewpets()));
                     },
                   ),
                   PopupMenuItem(

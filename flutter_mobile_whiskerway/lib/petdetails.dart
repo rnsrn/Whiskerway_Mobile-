@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobile_whiskerway/editprofile.dart';
-import 'package:flutter_mobile_whiskerway/home.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
 import 'package:flutter_mobile_whiskerway/mapPin.dart';
 import 'package:flutter_mobile_whiskerway/mating.dart';
 import 'package:flutter_mobile_whiskerway/messageChat.dart';
 import 'package:flutter_mobile_whiskerway/plusCircle.dart';
+import 'package:flutter_mobile_whiskerway/viewpets.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_picker/image_picker.dart'; // for image picker
 import 'package:line_icons/line_icons.dart';
@@ -54,7 +53,7 @@ class _PetdetailsState extends State<Petdetails> {
                 padding: EdgeInsets.only(right: 8),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                      MaterialPageRoute(builder: (context) => ViewPetPage()));
                 },
                 icon: const Icon(
                   Icons.arrow_back,
@@ -105,24 +104,24 @@ class _PetdetailsState extends State<Petdetails> {
                   : null,
               child: _image == null
                   ? Icon(
-                      Icons.person_2_outlined,
+                      Icons.pets,
                       size: 90,
                     )
                   : null,
             ),
-            TextButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HomePageEditProfile()));
-                },
-                child: Text("Edit Profile",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey,
-                    ))),
+            // TextButton(
+            //     onPressed: () {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => HomePageEditProfile()));
+            //     },
+            //     child: Text("Edit Profile",
+            //         style: TextStyle(
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.bold,
+            //           color: Colors.grey,
+            //         ))),
             SizedBox(height: 30),
             inputFile(label: "Pet Name"),
             dropdownField(
@@ -161,13 +160,30 @@ class _PetdetailsState extends State<Petdetails> {
             inputFile(label: "Bio"),
             inputFile(label: "Image"), // Image input field
             inputFile(label: "Generate QR"),
+
             Padding(
-              padding: EdgeInsets.only(top: 30),
+              padding: EdgeInsets.only(top: 20),
               child: Container(
                 width: 200,
                 padding: EdgeInsets.only(top: 3, right: 3),
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(50)),
+                child: MaterialButton(
+                  minWidth: double.infinity,
+                  height: 70,
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Placeholder()));
+                  },
+                  color: Color(0xff4b92d4),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Text(
+                    'Add Pet',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
               ),
             )
           ],

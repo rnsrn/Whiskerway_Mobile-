@@ -4,10 +4,9 @@ import 'package:five_pointed_star/five_pointed_star.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
 import 'package:flutter_mobile_whiskerway/mapPin.dart';
 import 'package:flutter_mobile_whiskerway/mating.dart';
-import 'package:flutter_mobile_whiskerway/editprofile.dart';
-import 'package:flutter_mobile_whiskerway/petdetails.dart';
 import 'package:flutter_mobile_whiskerway/plusCircle.dart';
 import 'package:flutter_mobile_whiskerway/profilePage.dart';
+import 'package:flutter_mobile_whiskerway/viewpets.dart';
 
 class HomeScreenPage extends StatefulWidget {
   @override
@@ -67,12 +66,12 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                           },
                         ),
                         PopupMenuItem(
-                          child: Text('Pet Details'),
+                          child: Text('View Pets'),
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => PetPageProfile()));
+                                    builder: (context) => ViewPetPage()));
                           },
                         ),
                         PopupMenuItem(
@@ -330,7 +329,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
 
 ///////////////////Section Header 3///////////////////
   Widget _buildSection3Card(int index) {
-    List<String> listimages2 = [
+    List<String> listimages = [
       'images/dog1.jpg',
       'images/dog2.jpg',
       'images/dog3.jpg',
