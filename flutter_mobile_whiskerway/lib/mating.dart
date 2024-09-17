@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_whiskerway/adoptionForm.dart';
 import 'package:flutter_mobile_whiskerway/home.dart';
 import 'package:flutter_mobile_whiskerway/home_screen.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
@@ -521,6 +522,37 @@ class Pet_StatisticPage extends StatelessWidget {
                               ],
                             ),
                           ),
+                          Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(18.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AdoptionForm()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xff013958),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 15,
+                                    horizontal: 50,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child: const Text(
+                                  "Adopt Pet",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
