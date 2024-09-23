@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'signup.dart';
 import 'verify.dart';
 
@@ -16,6 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -25,44 +25,44 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> loginUser(String email, String password) async {
-    // Replace instances with your production URL (like https://your-heroku-app.herokuapp.com)
-    const String apiUrl =
-        "https://wiskerway-e04ac6fd2a69.herokuapp.com/login"; // Adjust this for your setup // For android Emulator - local server
-    // final String apiUrl = "http://127.0.0.1:5000/login"; // For iOS Simulator - local server
-    // final String apiUrl = "http://<your-ip-address>:5000/login"; // For Physical Device - local server
+    setState(() {
+      _isLoading = true;
+    });
 
     try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          'email': email,
-          'password': password,
-        }),
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
       );
 
-      if (response.statusCode == 200) {
-        // Handle successful login
-        print('User logged in successfully');
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Login Successfully')),
-        );
+      // Check if the email is verified
+      User? user = userCredential.user;
+      if (user != null) {
+        if (!user.emailVerified) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('Please verify your email before logging in.')),
+          );
+          return;
+        }
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => EmailVerificationPage()),
         );
       } else {
-        // Handle login failure
-        print('Login failed: ${response.body}');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login failed: ${response.body}')),
+          const SnackBar(content: Text('Login failed')),
         );
       }
     } catch (e) {
-      print('Error during login: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $e')),
       );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -79,14 +79,16 @@ class _LoginPageState extends State<LoginPage> {
             // Gradient Background
             Container(
               decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
                     Color(0xff393939),
                     Color(0xffbbbbbc),
                     Color(0xff626363),
-                  ])),
+                  ],
+                ),
+              ),
             ),
             // Background Image
             Positioned.fill(
@@ -98,7 +100,6 @@ class _LoginPageState extends State<LoginPage> {
                 colorBlendMode: BlendMode.modulate,
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Form(
@@ -113,22 +114,19 @@ class _LoginPageState extends State<LoginPage> {
                         Text(
                           "Login",
                           style: TextStyle(
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
+                        SizedBox(height: 5),
                         Text(
                           "Welcome back!",
                           style: TextStyle(fontSize: 25, color: Colors.white),
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     Container(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -140,8 +138,9 @@ class _LoginPageState extends State<LoginPage> {
                             child: Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                  color: Colors.grey.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(15)),
+                                color: Colors.grey.withOpacity(0.8),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
                               child: Column(
                                 children: <Widget>[
                                   inputFile(
@@ -179,27 +178,27 @@ class _LoginPageState extends State<LoginPage> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
                                       TextButton(
-                                          onPressed: () {},
-                                          child: const Text(
-                                            'Forgot password?',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ))
+                                        onPressed: () {},
+                                        child: const Text(
+                                          'Forgot password?',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 245),
                     Padding(
-                      padding: const EdgeInsets.only(
-                        top: 30,
-                      ),
+                      padding: const EdgeInsets.only(top: 30),
                       child: Container(
                         padding: const EdgeInsets.only(top: 3, left: 3),
                         decoration: BoxDecoration(
@@ -221,14 +220,18 @@ class _LoginPageState extends State<LoginPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: _isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : const Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
@@ -237,26 +240,29 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         const Text(
-                          "I Don't have any account?",
+                          "I Don't have an account?",
                           style: TextStyle(color: Colors.white),
                         ),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SignupPage()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignupPage(),
+                              ),
+                            );
                           },
                           child: const Text(
                             " Sign Up",
                             style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                color: Colors.white),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
                           ),
-                        )
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -281,11 +287,12 @@ class _LoginPageState extends State<LoginPage> {
         Text(
           label,
           style: const TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.white),
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: Colors.white,
+          ),
         ),
-        const SizedBox(
-          height: 5,
-        ),
+        const SizedBox(height: 5),
         TextFormField(
           controller: controller,
           obscureText: obscureText,
@@ -303,9 +310,7 @@ class _LoginPageState extends State<LoginPage> {
                 : null,
             enabledBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(32.0)),
-              borderSide: BorderSide(
-                color: Colors.white,
-              ),
+              borderSide: BorderSide(color: Colors.white),
             ),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -313,9 +318,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        )
+        const SizedBox(height: 10),
       ],
     );
   }

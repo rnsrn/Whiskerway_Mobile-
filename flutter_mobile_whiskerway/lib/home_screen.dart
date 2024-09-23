@@ -213,7 +213,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NearMePage()));
+                              builder: (context) => HomePageNearMe()));
                     },
                     color: Color(0xff013958),
                     textColor: Colors.white,
@@ -248,7 +248,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NearMePage()));
+                              builder: (context) => HomePageNearMe()));
                     },
                     color: Color(0xff013958),
                     textColor: Colors.white,

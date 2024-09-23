@@ -312,9 +312,8 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'login.dart'; // Import your login page
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_mobile_whiskerway/login.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -327,7 +326,6 @@ class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -345,34 +343,33 @@ class _SignupPageState extends State<SignupPage> {
 
   Future<void> registerUser(
       String username, String email, String password) async {
-    // Replace instances with your production URL (like https://your-heroku-app.herokuapp.com)
-    const String apiUrl =
-        "https://wiskerway-e04ac6fd2a69.herokuapp.com/register"; // Adjust this for your setup // For android Emulator - local server
-    // final String apiUrl = "http://127.0.0.1:5000/register"; // For iOS Simulator - local server
-    // final String apiUrl = "http://<your-ip-address>:5000/register"; // For Physical Device - local server
-
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({
-        'firstname': username, // Assuming firstname and username are the same
-        'lastname': '', // Add last name if applicable
-        'mobile': '', // Add mobile number if applicable
-        'email': email,
-        'password': password,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      // Navigate to login or home screen on successful registration
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
+    try {
+      // Create user with email and password
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
-    } else {
+
+      // Send verification email
+      User? user = userCredential.user;
+      if (user != null) {
+        if (!user.emailVerified) {
+          await user.sendEmailVerification();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Verification email sent to ${user.email}')),
+          );
+        }
+        // Navigate to login screen on successful registration
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      }
+    } catch (e) {
       // Handle registration failure
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to register: ${response.body}')),
+        SnackBar(content: Text('Failed to register: ${e.toString()}')),
       );
     }
   }
@@ -406,7 +403,6 @@ class _SignupPageState extends State<SignupPage> {
               colorBlendMode: BlendMode.modulate,
             ),
           ),
-
           // Page Content
           SingleChildScrollView(
             child: Container(
@@ -630,15 +626,12 @@ class _SignupPageState extends State<SignupPage> {
                 const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             filled: true,
             fillColor: Colors.white,
-            suffixIcon: obscureText
+            suffixIcon: suffixIcon != null
                 ? IconButton(
                     icon: Icon(suffixIcon),
                     onPressed: toggleVisibility,
                   )
-                : IconButton(
-                    icon: Icon(suffixIcon),
-                    onPressed: toggleVisibility,
-                  ),
+                : null,
             enabledBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(32.0)),
               borderSide: BorderSide(
@@ -647,7 +640,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(32.0)),
-              borderSide: BorderSide(color: Colors.green),
+              borderSide: BorderSide(color: Colors.white),
             ),
           ),
         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobile_whiskerway/editprofile.dart';
 import 'package:flutter_mobile_whiskerway/home.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
 import 'package:flutter_mobile_whiskerway/mapPin.dart';
@@ -133,7 +132,7 @@ class _ViewpetsState extends State<Viewpets> {
               height: 700,
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: 3,
+                itemCount: 5,
                 itemBuilder: (context, index) {
                   return _buildSection3Card(index);
                 },
@@ -156,198 +155,111 @@ class _ViewpetsState extends State<Viewpets> {
       'images/dog5.jpg'
     ];
 
-    return Column(
-      children: [
-        Container(
-          height: 100,
-          width: 400,
-          color: Color(0xffd9f1fd),
-          padding: const EdgeInsets.all(3.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'images/dog1.jpg',
-                    height: 80,
-                    width: 100,
-                    fit: BoxFit.scaleDown,
+    return Dismissible(
+      key: Key('$index'),
+      direction: DismissDirection.endToStart,
+      background: Container(
+        color: Colors.red,
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Icon(Icons.delete, color: Colors.white),
+      ),
+      confirmDismiss: (direction) async {
+        return await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Confirm Delete"),
+              content: Text("Are you sure you want to delete $index?"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false); // Cancel deletion
+                  },
+                  child: Text("Cancel"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true); // Confirm deletion
+                  },
+                  child: Text(
+                    "Delete",
+                    style: TextStyle(color: Colors.red),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 3),
-                        child: Text(
-                          'Pet1',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      onDismissed: (direction) {
+        // Handle deletion logic here (e.g., remove from a list)
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Pet ${index + 1} deleted')),
+        );
+      },
+      child: Container(
+        height: 100,
+        width: 400,
+        color: Color(0xffd9f1fd),
+        padding: const EdgeInsets.all(3.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Image.asset(
+                  list_image[index],
+                  height: 80,
+                  width: 100,
+                  fit: BoxFit.scaleDown,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 3),
+                      child: Text(
+                        'Pet${index + 1}',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 3),
-                        child: Text(
-                          'Pet Details',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                          ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 3),
+                      child: Text(
+                        'Pet Details',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
-                    ],
-                  ),
-                  IconButton(
-                    iconSize: 30,
-                    padding: EdgeInsets.only(left: 150),
-                    icon:
-                        const Icon(Icons.arrow_right_alt, color: Colors.black),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PetPageProfile()));
-                    },
-                  ),
-                ],
-              )
-            ],
-          ),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  iconSize: 30,
+                  padding: EdgeInsets.only(left: 150),
+                  icon: const Icon(Icons.arrow_right_alt, color: Colors.black),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PetPageProfile()));
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
-        Container(
-          height: 100,
-          width: 400,
-          color: Color(0xffd9f1fd),
-          padding: const EdgeInsets.all(3.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'images/dog2.jpg',
-                    height: 80,
-                    width: 100,
-                    fit: BoxFit.scaleDown,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 5),
-                        child: Text(
-                          'Pet2',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 5),
-                        child: Text(
-                          'Pet Details',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    iconSize: 30,
-                    padding: EdgeInsets.only(left: 150),
-                    icon:
-                        const Icon(Icons.arrow_right_alt, color: Colors.black),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PetPageProfile()));
-                    },
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-        Container(
-          height: 100,
-          width: 400,
-          color: Color(0xffd9f1fd),
-          padding: const EdgeInsets.all(3.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'images/dog3.jpg',
-                    height: 80,
-                    width: 100,
-                    fit: BoxFit.scaleDown,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 5),
-                        child: Text(
-                          'Pet3',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 5),
-                        child: Text(
-                          'Pet Details',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    iconSize: 30,
-                    padding: EdgeInsets.only(left: 150),
-                    icon:
-                        const Icon(Icons.arrow_right_alt, color: Colors.black),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PetPageProfile()));
-                    },
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
