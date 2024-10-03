@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_whiskerway/adoptionForm.dart';
 import 'package:flutter_mobile_whiskerway/home.dart';
 import 'package:flutter_mobile_whiskerway/home_screen.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
+import 'package:flutter_mobile_whiskerway/mapPin.dart';
 import 'package:flutter_mobile_whiskerway/mating.dart';
+import 'package:flutter_mobile_whiskerway/messageChat.dart';
 import 'package:flutter_mobile_whiskerway/profilePage.dart';
+import 'package:flutter_mobile_whiskerway/viewpets.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -63,6 +67,15 @@ class _PetListScreenState extends State<PetListScreen> {
                     value: 'Profile',
                   ),
                   PopupMenuItem(
+                    child: Text('View Pets'),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewPetPage()));
+                    },
+                  ),
+                  PopupMenuItem(
                     child: Text(
                       'Log Out',
                       style: TextStyle(
@@ -114,7 +127,7 @@ class _PetListScreenState extends State<PetListScreen> {
             _buildTabContent(),
           ],
         ),
-      ), // Set the background color to #d9f1fd
+      ),
     );
   }
 
@@ -168,50 +181,60 @@ class AllTab extends StatelessWidget {
           width: 400,
           color: Color(0xffd9f1fd),
           padding: const EdgeInsets.all(3.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'images/dog1.jpg',
-                    height: 80,
-                    width: 100,
-                    fit: BoxFit.scaleDown,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 3),
-                        child: Text(
-                          'Row Header',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+          child: InkWell(
+            onTap: () {
+              // Handle the tap action here
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Pet_StatisticPage()));
+              // You can also navigate to another page, open a dialog, etc.
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      'images/petdetailsbg.jpg',
+                      height: 80,
+                      width: 100,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Text(
+                            'Row Header',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 3),
-                        child: Text(
-                          'Body copy description',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
+                        Padding(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Text(
+                            'Body copy description',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ],
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -229,50 +252,60 @@ class DogTab extends StatelessWidget {
           width: 400,
           color: Color(0xffd9f1fd),
           padding: const EdgeInsets.all(3.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'images/dog2.jpg',
-                    height: 80,
-                    width: 100,
-                    fit: BoxFit.scaleDown,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 3),
-                        child: Text(
-                          'Dog Row Header',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Pet_StatisticPage(),
+                ),
+              );
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      'images/dog2.jpg',
+                      height: 80,
+                      width: 100,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Text(
+                            'Dog Row Header',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 3),
-                        child: Text(
-                          'Dog Body copy description',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
+                        Padding(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Text(
+                            'Dog Body copy description',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ],
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ],
@@ -290,53 +323,242 @@ class CatTab extends StatelessWidget {
           width: 400,
           color: Color(0xffd9f1fd),
           padding: const EdgeInsets.all(3.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'images/dog3.jpg',
-                    height: 80,
-                    width: 100,
-                    fit: BoxFit.scaleDown,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 3),
-                        child: Text(
-                          'Cat Row Header',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Pet_StatisticPage(),
+                ),
+              );
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      'images/dog3.jpg',
+                      height: 80,
+                      width: 100,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Text(
+                            'Cat Row Header',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 3),
-                        child: Text(
-                          'Cat Body copy description',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
+                        Padding(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Text(
+                            'Cat Body copy description',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ],
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ],
+    );
+  }
+}
+
+//////////pet statistics///////
+
+class Pet_StatisticPage extends StatelessWidget {
+  const Pet_StatisticPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          color: const Color(0xffd9f1fd),
+          child: Column(
+            children: <Widget>[
+              // Top Section with Pet Details title and Back button
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 18),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 30,
+                      padding: const EdgeInsets.only(right: 8),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePageAdopt()));
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Text(
+                      "Pet Details",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Stack(
+                  children: <Widget>[
+                    // Background image
+                    Positioned.fill(
+                      child: Image.asset(
+                        'images/petdetailsbg.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    // Bottom content
+                    Positioned(
+                      bottom:
+                          20, // Adjust this value to control vertical position
+                      left: 18,
+                      right: 18,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Juyon",
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Posted by Ms. Mary Loi Yves Ricalde",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Juyon is a quiet cat, but during playtime,\nhe always wants to walk and run.",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          const Text(
+                            "Type: Cat"
+                            "\nGender: Male"
+                            "\nBreed: British Shorthair"
+                            "\nAge: 7 Months"
+                            "\nPersonality: Snorer"
+                            "\nPet Owner: Ms. Mary Loi Yves Ricalde",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          // Row with icons aligned to the right
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(LineIcons.heart),
+                                  iconSize: 24,
+                                  color: Colors.white,
+                                  onPressed: () {},
+                                ),
+                                const SizedBox(width: 5),
+                                IconButton(
+                                  icon:
+                                      const Icon(Icons.thumb_down_alt_outlined),
+                                  iconSize: 24,
+                                  color: Colors.white,
+                                  onPressed: () {},
+                                ),
+                                const SizedBox(width: 5),
+                                IconButton(
+                                  icon: const Icon(Icons.messenger_outline),
+                                  iconSize: 24,
+                                  color: Colors.white,
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          ),
+                          Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(18.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AdoptionForm()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xff013958),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 15,
+                                    horizontal: 50,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child: const Text(
+                                  "Adopt Pet",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -352,8 +574,8 @@ class _HomePageAdoptState extends State<HomePageAdopt> {
     HomeScreenPage(), // Example of actual widget
     MatingPage(), // Example of actual widget
     PetListScreen(), // Example of actual widget
-    Placeholder(),
-    Placeholder(), // Example of actual widget
+    ChatScreen(),
+    NearMePage(), // Example of actual widget
   ];
 
   @override

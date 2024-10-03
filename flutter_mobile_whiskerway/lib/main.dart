@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_mobile_whiskerway/dbHelper/mongodb.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart'; // Import your Firebase options
 import 'package:flutter_mobile_whiskerway/login.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await MongoDatabase.connect();
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform, // Initialize with options
+  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -19,7 +24,7 @@ class MyApp extends StatelessWidget {
 }
 
 class LandingPage extends StatelessWidget {
-  const LandingPage({Key? key}) : super(key: key);
+  const LandingPage({super.key});
 
   @override
   Widget build(BuildContext context) {

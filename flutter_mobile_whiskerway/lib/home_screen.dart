@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:five_pointed_star/five_pointed_star.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
+import 'package:flutter_mobile_whiskerway/mapPin.dart';
 import 'package:flutter_mobile_whiskerway/mating.dart';
-import 'package:flutter_mobile_whiskerway/editprofile.dart';
 import 'package:flutter_mobile_whiskerway/plusCircle.dart';
 import 'package:flutter_mobile_whiskerway/profilePage.dart';
+import 'package:flutter_mobile_whiskerway/viewpets.dart';
 
 class HomeScreenPage extends StatefulWidget {
   @override
@@ -53,12 +54,6 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                 ],
               ),
               const Spacer(),
-              IconButton(
-                icon: const Icon(Icons.search, color: Colors.black),
-                onPressed: () {
-                  // Handle search action
-                },
-              ),
               PopupMenuButton(
                   itemBuilder: (context) => [
                         PopupMenuItem(
@@ -68,6 +63,15 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => HomePageProfile()));
+                          },
+                        ),
+                        PopupMenuItem(
+                          child: Text('View Pets'),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ViewPetPage()));
                           },
                         ),
                         PopupMenuItem(
@@ -206,7 +210,10 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      // Implement the action to view all
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomePageNearMe()));
                     },
                     color: Color(0xff013958),
                     textColor: Colors.white,
@@ -238,7 +245,10 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      // Implement the action to view all
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomePageNearMe()));
                     },
                     color: Color(0xff013958),
                     textColor: Colors.white,
@@ -319,7 +329,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
 
 ///////////////////Section Header 3///////////////////
   Widget _buildSection3Card(int index) {
-    List<String> listimages2 = [
+    List<String> listimages = [
       'images/dog1.jpg',
       'images/dog2.jpg',
       'images/dog3.jpg',

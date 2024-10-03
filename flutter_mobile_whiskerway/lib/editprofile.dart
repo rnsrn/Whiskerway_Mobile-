@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_whiskerway/login.dart';
+import 'package:flutter_mobile_whiskerway/mapPin.dart';
 import 'package:flutter_mobile_whiskerway/mating.dart';
+import 'package:flutter_mobile_whiskerway/messageChat.dart';
+import 'package:flutter_mobile_whiskerway/plusCircle.dart';
 import 'package:flutter_mobile_whiskerway/profilePage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -101,7 +104,6 @@ class EditProfilePage extends StatelessWidget {
               obscureText: true,
               suffixIcon: Icons.visibility_off,
             ),
-            inputFile(label: "Zip Code"),
             Padding(
               padding: EdgeInsets.only(top: 30),
               child: Container(
@@ -129,7 +131,7 @@ class EditProfilePage extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -192,9 +194,9 @@ class _HomePageEditProfileState extends State<HomePageEditProfile> {
   static List<Widget> _widgetOptions = <Widget>[
     EditProfilePage(), // Example of actual widget
     MatingPage(), // Example of actual widget
-    Placeholder(), // Example of actual widget
-    Placeholder(),
-    Placeholder(), // Example of actual widget
+    PetListScreen(), // Example of actual widget
+    ChatScreen(),
+    NearMePage(), // Example of actual widget
   ];
 
   @override
